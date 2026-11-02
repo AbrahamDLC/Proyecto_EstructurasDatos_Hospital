@@ -2,6 +2,7 @@
 #include<stdio.h>
 
 int validaStrings(const char* cadenaTxt){
+    if(cadenaTxt==NULL){return 0;}
     regex_t regexp;
     const char* pattern = "^[a-zA-ZáéíóúÁÉÍÓÚÑñ ]+$";
     int valido; //se guarda 1 o 0 dependiendo del match
