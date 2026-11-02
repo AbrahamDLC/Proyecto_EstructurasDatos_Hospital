@@ -22,17 +22,32 @@ typedef enum{
     ERROR_APELLIDO_VACIO,
     ERROR_EXPEDIENTE_INVALIDO,
     ERROR_FECHA_INVALIDA,
-    ERROR_PACIENTE_DUPLICADO
+    ERROR_PACIENTE_DUPLICADO,
+    ERROR_PACIENTE_INVALIDO,
+    ERROR_MEMORIA,
+    ID_NO_ENCONTRADO
 } ErrorPaciente;
 
-
-int registrarPaciente(paciente nuevo);
+int registrarPaciente(listaPacientes* lista, paciente nuevo, int* id);
 int validarPaciente(paciente pacienteN);
-paciente* buscarID(int IDpaciente);
-paciente* buscarExpediente(const char* expediente);
-int bajaDePaciente(const char* IDpaciente);
+paciente* buscarID(listaPacientes* lista, int IDpaciente);
+paciente* buscarExpediente(listaPacientes* lista, const char* expediente);
+int bajaDePaciente(int IDpaciente);
 void mostrarPaciente();
 void listaPacientes();
+//==========================================================
+typedef struct 
+{
+    paciente* datos;
+    int cantidad;
+    int capacidad;
+    int sigId;
+}listaPacientes;
+
+int iniciarLista(listaPacientes* lista);
+void liberarLista(listaPacientes* lista);
+
+
 #endif
 
 //#ifndef verifica si ya existe una definicion con ese nombre y #define es para decirle al programa que si ya procesó el archivo una vez en algún momento, no lo vuelva a cargar
