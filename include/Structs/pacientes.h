@@ -14,38 +14,50 @@ typedef struct paciente
 
 
 }paciente;
+
+//==========================================================
+//LINKED LIST
+
+typedef struct nodoPaciente{
+    paciente dato;
+    struct nodoPaciente* siguienteNodo;
+}nodoPaciente;
+
+typedef struct {
+    nodoPaciente* cabeza;
+    nodoPaciente* cola;
+    int cantidad;
+    int sigId;
+} listaPacientes;
+
+struct nodoPaciente* crearNodo(paciente p);
 //ESTO ES PORQUE LO PASAREMOS A FRONT WEY, MOSTRARÁ EL TIPO DE ERROR EXACTO
 typedef enum{
-    PACIENTE_VALIDO,
+    PACIENTE_VALIDO=1,
     ERROR_ID_INVALIDO,
     ERROR_NOMBRE_VACIO,
+    ERROR_NOMBRE_INVALIDO,
     ERROR_APELLIDO_VACIO,
     ERROR_EXPEDIENTE_INVALIDO,
     ERROR_FECHA_INVALIDA,
     ERROR_PACIENTE_DUPLICADO,
     ERROR_PACIENTE_INVALIDO,
     ERROR_MEMORIA,
-    ID_NO_ENCONTRADO
+    ID_NO_ENCONTRADO,
+    CLAVE_INVALIDA,
+    USUARIO_INVALIDO
 } ErrorPaciente;
 
 int registrarPaciente(listaPacientes* lista, paciente nuevo, int* id);
 int validarPaciente(paciente pacienteN);
 paciente* buscarID(listaPacientes* lista, int IDpaciente);
 paciente* buscarExpediente(listaPacientes* lista, const char* expediente);
-int bajaDePaciente(int IDpaciente);
-void mostrarPaciente();
-void listaPacientes();
-//==========================================================
-typedef struct 
-{
-    paciente* datos;
-    int cantidad;
-    int capacidad;
-    int sigId;
-}listaPacientes;
-
+int bajaDePaciente(listaPacientes* lista, int IDpaciente);
 int iniciarLista(listaPacientes* lista);
 void liberarLista(listaPacientes* lista);
+
+
+
 
 
 #endif
