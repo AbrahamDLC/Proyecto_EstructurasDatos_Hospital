@@ -40,3 +40,36 @@ int validaExpediente(const char* exped){
     return -1;
 
 }
+
+//===========================================================
+//VALIDA LOGIN
+
+int validaClave(const char* contrasenia){
+    if(contrasenia==NULL){return 0;}
+    regex_t regexp;
+    const char* pattern= "^[a-zA-Z0-9]{8,10}$";
+    int valido;
+    valido = regcomp(&regexp, pattern, REG_EXTENDED);
+    if(valido!=0){return -1;}
+    valido=regexec(&regexp, contrasenia,0,NULL,0);
+    regfree(&regexp);
+    if(valido==0){return 1;}
+    if(valido==REG_NOMATCH){return 0;}
+    return -1;
+
+}
+
+int validaUsuario(const char* user){
+    if(user==NULL){return 0;}
+    regex_t regexp;
+
+    const char* pattern="^[a-zA-Z0-9.?]{8}$";
+    int valido;
+    valido = regcomp(&regexp, pattern, REG_EXTENDED);
+    if(valido!=0){return -1;}
+    valido = regexec(&regexp, user, 0,NULL,0);
+    regfree(&regexp);
+    if(valido==0){return 1;}
+    if(valido==REG_NOMATCH){return 0;}
+    return -1;
+}

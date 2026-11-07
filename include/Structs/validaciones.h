@@ -4,5 +4,6 @@
 
 int validaStrings(const char* cadenaTxt);
 int validaExpediente(const char* exped);
+int validaLogin(const char* contrasenia);
 
 #endif
