@@ -39,6 +39,14 @@ int validarPaciente(paciente p){
     
 }
 
+struct nodoPaciente* crearNodo(paciente p){
+    nodoPaciente* nuevo = malloc(sizeof(nodoPaciente));
+    if(nuevo==NULL){return NULL;}
+    nuevo->dato=p;
+    nuevo->siguienteNodo=NULL;
+    return nuevo; 
+}
+
 //==============================================================
 //LINKED LIST
 int iniciarLista(listaPacientes* lista){
@@ -108,3 +116,4 @@ paciente* buscarExpediente(listaPacientes* lista, const char* exp){
     }
     return NULL;
 }
+
