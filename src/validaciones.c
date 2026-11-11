@@ -1,5 +1,6 @@
 #include "validaciones.h"
 #include<stdio.h>
+#include <ctype.h>
 
 int validaStrings(const char* cadenaTxt){
     if(cadenaTxt==NULL){return 0;}
@@ -89,6 +90,17 @@ int validaCedula(const char* cedula){
     return -1;
 }
 
-int validaID(int id){
-    if(id<0)
+bool validaID(int *id) {
+    char buffer[12];
+    if (fgets(buffer, sizeof(buffer), stdin) == NULL) return false;
+    buffer[strcspn(buffer, "\n")] = '\0';
+
+    if (buffer[0] == '\0') return false;
+    for (int i = 0; buffer[i] != '\0'; i++) {
+        if (!isdigit((unsigned char)buffer[i])) return false;
+    }
+
+    *id = atoi(buffer);
+    return *id > 0;
 }
+
