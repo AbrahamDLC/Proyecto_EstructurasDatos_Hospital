@@ -1,15 +1,16 @@
 #include "doctor.h"
-#include "validaciones.h"
-#include "erroresGrales.h"
 
 int validarDr(doctor p){
     if(validaStrings(p.nombre)!=1){
         return ERROR_NOMBREoAPELLIDO_INVALIDO;
     }
-    if(vali)
+    if(validaID(p.idDoctor)!=true){return ERROR_ID_INVALIDO;}
+    if(validaStrings(p.apellidoP)!=1){return ERROR_NOMBREoAPELLIDO_INVALIDO;}
+    if(validaStrings(p.appellidoM)!=1){return ERROR_NOMBREoAPELLIDO_INVALIDO;}
+    if(validaCedula(p.cedula)!=1){return ERROR_CEDULA_INVALIDA;}
+    if(buscarIDEspecialidad(p.idEspecialidad)!=1){return 3;}
+    
 }
-
-
 
 
 

@@ -4,11 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "especialidades.h"
+#include "erroresGrales.h"
+#include "validaciones.h"
+
 
 typedef enum{
     DOCTOR_VALIDO=1,
     ERROR_DR_NOENCONTRADO,
     ERROR_ID_DR_INVALIDO,
+    ERROR_CEDULA_INVALIDA
 
 }errorDoctor;
 
