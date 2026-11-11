@@ -73,3 +73,22 @@ int validaUsuario(const char* user){
     if(valido==REG_NOMATCH){return 0;}
     return -1;
 }
+//===============================================================
+//DOCTOR
+int validaCedula(const char* cedula){
+    if(cedula==NULL){return 0;}
+    regex_t regexp;
+
+    const char* pattern = "^[0-9]{8,9}$";
+    int validarPatron = regcomp(&regexp,pattern, REG_EXTENDED);
+    if(validarPatron!=0){return -1;}
+    validarPatron = regexec(&regexp, cedula, 0,NULL,0);
+    regfree(&regexp);
+    if(validarPatron==0){return 1;}
+    if(validarPatron==REG_NOMATCH){ return 0;}
+    return -1;
+}
+
+int validaID(int id){
+    if(id<0)
+}

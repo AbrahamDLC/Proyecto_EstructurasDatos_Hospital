@@ -7,4 +7,6 @@ int validaExpediente(const char* exped);
 int validaLogin(const char* contrasenia);
 int validaClave(const char* contrasenia);
 int validaUsuario(const char* user);
+int validaCedula(const char* cedula);
+int validaID(int id);
 #endif
