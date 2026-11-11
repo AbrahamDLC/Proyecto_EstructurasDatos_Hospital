@@ -65,7 +65,7 @@ especialidad* buscarIDEspecialidad(listaEspecialidades* lista, int id){
 }
 
 especialidad* buscarNombreEspecialidad(listaEspecialidades* lista, const char* nombre){
-    if(lista||validaStrings(nombre)!=1){return NULL;}
+    if(lista==NULL||validaStrings(nombre)!=1){return NULL;}
     for(nodoEspecialidad* n=lista->cabeza;n!=NULL;n=n->siguienteNodo){
         if(strcmp(n->dato.especialidadN,nombre)==0){return &n->dato.especialidadN;}
     }

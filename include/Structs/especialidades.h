@@ -1,3 +1,6 @@
+#ifndef ESPECIALIDADES_H
+#define ESPECIALIDADES_H
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -36,3 +39,5 @@ int iniciarEspecialidad(listaEspecialidades* lista);
 void liberarEspecialidad(listaEspecialidades* lista);
 especialidad* buscarIDEspecialidad(listaEspecialidades* lista, int idE);
 especialidad* buscarNombreEspecialidad(listaEspecialidades* lista, const char* nombre);
+
+#endif
