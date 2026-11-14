@@ -20,7 +20,7 @@ void liberarEspecialidad(listaEspecialidades* lista){
     lista->cantidad = 0;
 }
 
-struct nodoEspecialidad* crearNodo(especialidad e){
+struct nodoEspecialidad* crearNodoEspecialidad(especialidad e){
     nodoEspecialidad* nuevo = malloc(sizeof(nodoEspecialidad));
     if(nuevo==NULL){return NULL;}
     nuevo->dato=e;

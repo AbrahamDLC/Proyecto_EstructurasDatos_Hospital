@@ -48,9 +48,9 @@ typedef struct{
 //MÉTODOS
 int validarDr(doctor p);
 int registrarDr(listaDoctor* lista, doctor d, int* drID);
-int iniciarLista(listaDoctor* lista);
-void liberarLista(listaDoctor* lista);
-struct nodoDoctor* crearNodo(doctor d);
+int iniciarListaDr(listaDoctor* lista);
+void liberarListaDr(listaDoctor* lista);
+struct nodoDoctor* crearNodoDr(doctor d);
 doctor* buscarDr_ID(listaDoctor* lista, int id);
 doctor* buscarDr_Cedula(listaDoctor* lista, const char* cedula);
 
