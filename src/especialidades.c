@@ -41,7 +41,7 @@ int registrarEspecialidad(listaEspecialidades* lista,especialidad e){
 
 //GUARDAMOS LA ESPECIALIDAD
 
-    nodoEspecialidad* nuevo = crearNodo(e);
+    nodoEspecialidad* nuevo = crearNodoEspecialidad(e);
     if(nuevo==NULL){return ERROR_MEMORIA;}
     if(lista->cabeza==NULL){
         lista->cabeza=nuevo;
@@ -59,7 +59,7 @@ int registrarEspecialidad(listaEspecialidades* lista,especialidad e){
 especialidad* buscarIDEspecialidad(listaEspecialidades* lista, int id){
     if(lista==NULL){return NULL;}
     for(nodoEspecialidad* n = lista->cabeza; n!=NULL; n=n->siguienteNodo){
-        if(n->dato.id==id){return &n->dato.especialidadN;}
+        if(n->dato.id==id){return &n->dato;}
     }
     return NULL;
 }
@@ -67,7 +67,7 @@ especialidad* buscarIDEspecialidad(listaEspecialidades* lista, int id){
 especialidad* buscarNombreEspecialidad(listaEspecialidades* lista, const char* nombre){
     if(lista==NULL||validaStrings(nombre)!=1){return NULL;}
     for(nodoEspecialidad* n=lista->cabeza;n!=NULL;n=n->siguienteNodo){
-        if(strcmp(n->dato.especialidadN,nombre)==0){return &n->dato.especialidadN;}
+        if(strcmp(n->dato.especialidadN,nombre)==0){return &n->dato;}
     }
     return NULL;
 }

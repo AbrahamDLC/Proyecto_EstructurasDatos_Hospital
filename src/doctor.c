@@ -8,6 +8,7 @@ int validarDr(doctor p){
     if(validaStrings(p.apellidoP)!=1){return ERROR_NOMBREoAPELLIDO_INVALIDO;}
     if(validaStrings(p.appellidoM)!=1){return ERROR_NOMBREoAPELLIDO_INVALIDO;}
     if(validaCedula(p.cedula)!=1){return ERROR_CEDULA_INVALIDA;}
+    return DOCTOR_VALIDO;
     
 }
 
@@ -45,7 +46,7 @@ void liberarListaDr(listaDoctor* lista){
     lista->cantidad=0;
 }
 
-doctor* buscarDr_ID_Dr(listaDoctor* lista, int drID){
+doctor* buscarDr_ID(listaDoctor* lista, int drID){
     if(lista==NULL){return NULL;}
     for(nodoDoctor* n=lista->cabeza ; n!=NULL; n=n->siguienteNodo){
         if(n->dato.idDoctor==drID){return &n->dato;}
