@@ -32,3 +32,43 @@ int agregar(nodoPalabra* nodo, char *palabra){
     }
 
 }
+
+void preorden(nodoPalabra *nodo, nodoPalabra *arreglo[], int *indice){
+    if (nodo!=NULL){
+        arreglo[*indice]=nodo;
+        (*indice)++;
+        preorden(nodo->izquierda, arreglo, indice);
+        preorden(nodo->derecha, arreglo, indice);
+    }
+}
+
+void inorden(nodoPalabra *nodo, nodoPalabra *arreglo[], int *indice){
+    if(nodo!=NULL){
+        inorden(nodo->izquierda, arreglo, indice);
+        arreglo[*indice]=nodo;
+        (*indice)++;
+        inorden(nodo->derecha,arreglo, indice);
+    }
+}
+
+void postorden(nodoPalabra *nodo, nodoPalabra *arreglo[], int *indice){
+    if (nodo!=NULL)
+    {
+        postorden(nodo->izquierda, arreglo, indice);
+        postorden(nodo->derecha, arreglo, indice);
+        arreglo[*indice]=nodo;
+        (*indice)++;
+    }
+    
+}
+
+nodoPalabra* buscar(nodoPalabra *nodo, char *cadena){
+    if(nodo==NULL)return NULL;
+    if(strcmp(cadena, nodo->cadena)==0){
+        return nodo;
+    }else if(strcmp(cadena, nodo->cadena)>0){
+        return buscar(nodo->derecha, cadena);
+    }else{
+        return buscar(nodo->izquierda, cadena);
+    }
+}

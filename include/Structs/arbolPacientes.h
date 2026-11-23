@@ -1,4 +1,4 @@
-#ifndef ARBOL_BINARIO
+#ifndef ARBOL_PACIENTE
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -13,23 +13,9 @@ typedef struct nodoPalabra{
 nodoPalabra* raiz(char palabra[MAX_LONG]);
 int agregar(nodoPalabra *nodo, char *palabra);
 nodoPalabra* buscar(nodoPalabra *nodo, char *cadena);
-void preorden(nodoPalabra *nodo);
-void inorden(nodoPalabra *nodo);
-void postorden(nodoPalabra *nodo);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void preorden(nodoPalabra *nodo, nodoPalabra *arreglo[],int *indice);
+void inorden(nodoPalabra *nodo, nodoPalabra *arreglo[], int *indice);
+void postorden(nodoPalabra *nodo, nodoPalabra *arreglo[], int *indice);
 
 
 #endif
