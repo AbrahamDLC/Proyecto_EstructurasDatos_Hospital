@@ -47,8 +47,8 @@ int registrarEspecialidad(listaEspecialidades* lista,especialidad e){
         lista->cabeza=nuevo;
     }else{
         lista->cola->siguienteNodo=nuevo;
-        lista->cola=nuevo;
     }
+    lista->cola=nuevo;
     lista->cantidad++;
     lista->sigId++;
     return ESPECIALIDAD_VALIDA;

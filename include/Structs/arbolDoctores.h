@@ -1,21 +1,11 @@
-#ifndef ARBOL_DOCTOR
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#define MAX_LONG 100
+#ifndef ARBOL_DOCTORES_H
+#define ARBOL_DOCTORES_H
+#include "arbol.h"
+#include "doctor.h"
 
-typedef struct nodoPalabraDR{
-    char cadena[MAX_LONG];
-    struct nodoPalabra *izquierda;//rama de la izquierda
-    struct nodoPalabra *derecha; //rama de derecha
-}nodoPalabraDR;
-
-nodoPalabraDR* raiz(char palabra[MAX_LONG]);
-int agregar(nodoPalabraDR *nodo, char *palabra);
-nodoPalabra* buscar(nodoPalabraDR *nodo, char *cadena);
-void preorden(nodoPalabraDR *nodo, nodoPalabraDR *arreglo[],int *indice);
-void inorden(nodoPalabraDR *nodo, nodoPalabraDR *arreglo[], int *indice);
-void postorden(nodoPalabraDR *nodo, nodoPalabraDR *arreglo[], int *indice);
-
+/* Índice de doctores por "apellidoP appellidoM nombre" (en minúsculas), apunta al idDoctor. */
+int claveIndiceDoctor(const doctor* d, char* destino, size_t tam);
+int indexarDoctor(arbolIndice* a, const doctor* d);
+int indexarDoctores(arbolIndice* a, const listaDoctor* lista);
 
 #endif

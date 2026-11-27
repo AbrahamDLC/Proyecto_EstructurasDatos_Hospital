@@ -1,4 +1,5 @@
-#ifndef DOCTORES
+#ifndef DOCTORES_H
+#define DOCTORES_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +14,8 @@ typedef enum{
     DOCTOR_VALIDO=1,
     ERROR_DR_NOENCONTRADO,
     ERROR_ID_DR_INVALIDO,
-    ERROR_CEDULA_INVALIDA
+    ERROR_CEDULA_INVALIDA,
+    ERROR_CEDULA_DUPLICADA
 
 }errorDoctor;
 
@@ -26,7 +28,7 @@ typedef struct doctor{
     char nombre[15];
     char apellidoP[15];
     char appellidoM[15];
-    char cedula[9];
+    char cedula[10];
     bool activo;
 
 }doctor;

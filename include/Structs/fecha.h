@@ -10,7 +10,10 @@ typedef struct fecha
 }fecha;
 
 fecha fechaActual(void);
-int validarFecha(int dia, int mes, int anio);
+int minutosActuales(void);                            
+int validarFecha(int dia, int mes, int anio);         
+int validarFechaCita(int dia, int mes, int anio);      
+int compararFechas(fecha a, fecha b);                  
 int calcularEdadPaciente(fecha fechaNacimiento, fecha fechaActual);
 
 #endif

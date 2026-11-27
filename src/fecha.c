@@ -1,5 +1,4 @@
 #include "fecha.h"
-#define ANIO_ACTUAL 2026
 
 int validarFecha(int dia, int mes, int anio){
     int bisiesto;
@@ -13,7 +12,7 @@ int validarFecha(int dia, int mes, int anio){
     
     if (dia<1||dia>31){return 0;}
     if (mes<1||mes>12){return 0;}
-    if (anio>ANIO_ACTUAL||anio<1900){return 0;}
+    if (anio>fechaActual().anio||anio<1900){return 0;}
     switch (mes)
     {
     case 2:
@@ -77,6 +76,26 @@ int calcularEdadPaciente(fecha fechaNacimiento, fecha fechaHoy){
      
     
     return edad;
+
+    int minutosActuales(void){
+        time_t t = time(NULL);
+        struct tm* m = localtime(&t);
+        return m->tm_hour*60 + m->tm_min;
+    }
+    
+    int compararFechas(fecha a, fecha b){
+        if(a.anio != b.anio) return a.anio - b.anio;
+        if(a.mes  != b.mes)  return a.mes  - b.mes;
+        return a.dia - b.dia;
+    }
+    
+    int validarFechaCita(int dia, int mes, int anio){
+        // cita debe ser HOY o FUTURO
+        fecha hoy = fechaActual();
+        if(!validarFecha(dia,mes,anio)) return 0;
+        fecha f = {dia,mes,anio};
+        return compararFechas(f, hoy) >= 0;
+    }
     
 }
 

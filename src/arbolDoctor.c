@@ -1,74 +1,27 @@
+#include <stdio.h>
+#include <ctype.h>
 #include "arbolDoctores.h"
 
-nodoPalabraDR* raiz(char palabra[MAX_LONG]){
-    if(palabra==NULL) return NULL;
-    nodoPalabraDR* nuevo = malloc(sizeof(nodoPalabraDR));
-    if(nuevo==NULL || palabra[0]=='\0') return NULL;
-
-    strcpy(nuevo->cadena, palabra);
-
-    nuevo->izquierda =NULL;
-    nuevo->derecha=NULL;
-    return nuevo;
+int claveIndiceDoctor(const doctor* d, char* destino, size_t tam){
+    if(d==NULL||destino==NULL||tam==0){return ARBOL_CLAVE_INVALIDA;}
+    int w=snprintf(destino,tam,"%s %s %s",d->apellidoP,d->appellidoM,d->nombre);
+    if(w<0||(size_t)w>=tam){return ARBOL_CLAVE_INVALIDA;}
+    for(char* c=destino;*c;c++){*c=(char)tolower((unsigned char)*c);}
+    return ARBOL_OK;
 }
 
-int agregar(nodoPalabraDR* nodo, char *palabra){
-    if(strcmp(palabra, nodo->cadena)>0){
-        if(nodo->derecha==NULL){
-            nodo->derecha=raiz(palabra);
-            return 1;
-        }else{
-            agregar(nodo->derecha, palabra);
-        }
-    }else if(strcmp(palabra,nodo->cadena<0)){
-        if(nodo->izquierda==NULL){
-            nodo->izquierda=raiz(palabra);
-            return 1;
-        }else{
-            agregar(nodo->izquierda, palabra);
-        }
-    }else{
-        return 0;
-    }
-
+int indexarDoctor(arbolIndice* a, const doctor* d){
+    char clave[MAX_CLAVE];
+    int r=claveIndiceDoctor(d,clave,sizeof(clave));
+    if(r!=ARBOL_OK){return r;}
+    return insertarArbol(a,clave,d->idDoctor);
 }
 
-void preorden(nodoPalabraDR *nodo, nodoPalabraDR *arreglo[], int *indice){
-    if (nodo!=NULL){
-        arreglo[*indice]=nodo;
-        (*indice)++;
-        preorden(nodo->izquierda, arreglo, indice);
-        preorden(nodo->derecha, arreglo, indice);
+int indexarDoctores(arbolIndice* a, const listaDoctor* lista){
+    if(a==NULL||lista==NULL){return ARBOL_CLAVE_INVALIDA;}
+    for(nodoDoctor* n=lista->cabeza;n!=NULL;n=n->siguienteNodo){
+        int r=indexarDoctor(a,&n->dato);
+        if(r!=ARBOL_OK&&r!=ARBOL_DUPLICADO){return r;}
     }
-}
-
-void inorden(nodoPalabraDR *nodo, nodoPalabraDR *arreglo[], int *indice){
-    if(nodo!=NULL){
-        inorden(nodo->izquierda, arreglo, indice);
-        arreglo[*indice]=nodo;
-        (*indice)++;
-        inorden(nodo->derecha,arreglo, indice);
-    }
-}
-
-void postorden(nodoPalabraDR *nodo, nodoPalabraDR *arreglo[], int *indice){
-    if (nodo!=NULL)
-    {
-        postorden(nodo->izquierda, arreglo, indice);
-        postorden(nodo->derecha, arreglo, indice);
-        arreglo[*indice]=nodo;
-        (*indice)++;
-    }
-    
-}
-
-nodoPalabraDR* buscar(nodoPalabraDR *nodo, char *cadena){
-    if(nodo==NULL)return NULL;
-    if(strcmp(cadena, nodo->cadena)==0){
-        return nodo;
-    }else if(strcmp(cadena, nodo->cadena)>0){
-        return buscar(nodo->derecha, cadena);
-    }else{
-        return buscar(nodo->izquierda, cadena);
-    }
+    return ARBOL_OK;
 }
