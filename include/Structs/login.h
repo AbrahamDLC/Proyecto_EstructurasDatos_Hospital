@@ -17,7 +17,7 @@ typedef enum{
     LOGIN_EXITOSO=1,
     ERROR_FORMATO_INVALIDO,
     ERROR_CREDENCIALES,
-    ERROR_BLOQUEADO
+    ERROR_BLOQUEADO,
 }ErrorLogin;
 int ingresarClave(const char* claveU, const char* claveGuardada, int* intentos);
 int ingresarUsuario(const char* user, const char* userGuardado);

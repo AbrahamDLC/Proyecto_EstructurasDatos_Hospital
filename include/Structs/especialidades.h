@@ -17,7 +17,7 @@ typedef enum{
 
 typedef struct especialidad{
     int id;
-    char especialidadN[20];
+    char especialidadN[50];
 }especialidad;
 
 typedef struct nodoEspecialidad{

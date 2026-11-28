@@ -1,6 +1,5 @@
 #include "login.h"
 #include "validaciones.h"
-#include "pacientes.h"
 
 int ingresarClave(const char* claveUs, const char* claveG, int* intentos){
     if(*intentos >=MAX_INTENTOS){return ERROR_BLOQUEADO;}
@@ -21,7 +20,7 @@ int ingresarUsuario(const char* usuarioIngr, const char* usuarioG){
 
     if(strcmp(usuarioIngr,usuarioG)!=0)
     {
-        return USUARIO_INVALIDO;
+        return ERROR_CREDENCIALES;
     }
     
     return LOGIN_EXITOSO;
