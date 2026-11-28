@@ -59,7 +59,7 @@ jobs:
       - name: Compilar Backend C (macOS)
         if: matrix.platform == 'macos-latest'
         run: |
-          cc -dynamiclib -fPIC -O2 -Iinclude/Structs \
+          cc -dynamiclib -fPIC -O2 -arch arm64 -arch x86_64 -Iinclude/Structs \
               src/ffi_facade.c src/pacientes.c src/doctor.c src/especialidades.c src/cita.c \
               src/arbol.c src/arbolPacientes.c src/arbolDoctor.c \
               src/pila.c src/cola.c src/validaciones.c src/fecha.c src/login.c \
@@ -77,7 +77,7 @@ jobs:
       - name: Compilar Backend C (Windows)
         if: matrix.platform == 'windows-latest'
         run: |
-          gcc -shared -fPIC -O2 -Iinclude/Structs `
+          gcc -shared -O2 -static-libgcc -Iinclude/Structs `
               src/ffi_facade.c src/pacientes.c src/doctor.c src/especialidades.c src/cita.c `
               src/arbol.c src/arbolPacientes.c src/arbolDoctor.c `
               src/pila.c src/cola.c src/validaciones.c src/fecha.c src/login.c `
