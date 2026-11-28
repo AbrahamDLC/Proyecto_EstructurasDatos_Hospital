@@ -2,6 +2,7 @@
 #define PACIENTE_H
 #include <stdbool.h>
 #include "fecha.h"
+#include "erroresGrales.h"
 typedef struct paciente
 {
     int id;
@@ -34,7 +35,6 @@ struct nodoPaciente* crearNodo(paciente p);
 //ESTO ES PORQUE LO PASAREMOS A FRONT WEY, MOSTRARÁ EL TIPO DE ERROR EXACTO
 typedef enum{
     PACIENTE_VALIDO=1,
-    ERROR_ID_INVALIDO,
     ERROR_NOMBRE_VACIO,
     ERROR_NOMBRE_INVALIDO,
     ERROR_APELLIDO_VACIO,
@@ -42,7 +42,6 @@ typedef enum{
     ERROR_FECHA_INVALIDA,
     ERROR_PACIENTE_DUPLICADO,
     ERROR_PACIENTE_INVALIDO,
-    ERROR_MEMORIA,
     ID_NO_ENCONTRADO,
     CLAVE_INVALIDA,
     USUARIO_INVALIDO
@@ -53,6 +52,7 @@ int validarPaciente(paciente pacienteN);
 paciente* buscarID(listaPacientes* lista, int IDpaciente);
 paciente* buscarExpediente(listaPacientes* lista, const char* expediente);
 int bajaDePaciente(listaPacientes* lista, int IDpaciente);
+int reactivarPaciente(listaPacientes* lista, int IDpaciente);
 int iniciarLista(listaPacientes* lista);
 void liberarLista(listaPacientes* lista);
 

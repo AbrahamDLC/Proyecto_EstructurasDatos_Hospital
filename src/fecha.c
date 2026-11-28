@@ -1,82 +1,72 @@
 #include "fecha.h"
-#define ANIO_ACTUAL 2026
 
-int validarFecha(int dia, int mes, int anio){
-    int bisiesto;
+static int esFechaCalendarioValida(int dia, int mes, int anio){
+    if(anio < 1900) return 0;
+    if(mes < 1 || mes > 12) return 0;
+    if(dia < 1) return 0;
+    int bisiesto = ((anio % 400 == 0) || (anio % 4 == 0 && anio % 100 != 0));
     int dias;
-    if ((anio % 400 == 0) || (anio % 4 == 0 && anio % 100 != 0))
-    {
-        bisiesto=1;
-    }else{
-        bisiesto=0;
+    switch(mes){
+        case 2:  dias = bisiesto ? 29 : 28; break;
+        case 4:  case 6:  case 9:  case 11: dias = 30; break;
+        default: dias = 31;
     }
-    
-    if (dia<1||dia>31){return 0;}
-    if (mes<1||mes>12){return 0;}
-    if (anio>ANIO_ACTUAL||anio<1900){return 0;}
-    switch (mes)
-    {
-    case 2:
-        if (bisiesto)
-        {
-            dias=29;
-        }else{
-            dias=28;
-        }
-        
-        break;
-    case 4:
-    case 6:
-    case 9:
-    case 11:
-        dias=30;
-        break;
-    default:
-        dias=31;
-        break;
-    }
-    if (dia>dias){return 0;}
-    
-    
-    return 1;
+    return dia <= dias;
 }
 
-fecha fechaActual(){
-    time_t fechaActual= time(NULL);
-    struct tm *t=localtime(&fechaActual);
+static fecha hacerFecha(int d, int m, int a){
+    fecha f;
+    f.dia  = d;
+    f.mes  = m;
+    f.anio = a;
+    return f;
+}
+
+fecha fechaActual(void){
+    time_t t = time(NULL);
+    struct tm *lt = localtime(&t);
     fecha hoy;
-    hoy.dia=t->tm_mday;
-    hoy.mes=t->tm_mon+1;
-    hoy.anio=t->tm_year+1900;
- 
-    return hoy;    
+    hoy.dia  = lt->tm_mday;
+    hoy.mes  = lt->tm_mon + 1;
+    hoy.anio = lt->tm_year + 1900;
+    return hoy;
+}
+
+int minutosActuales(void){
+    time_t t = time(NULL);
+    struct tm *lt = localtime(&t);
+    return lt->tm_hour * 60 + lt->tm_min;
+}
+
+int compararFechas(fecha a, fecha b){
+    if(a.anio != b.anio) return a.anio - b.anio;
+    if(a.mes  != b.mes)  return a.mes  - b.mes;
+    return a.dia - b.dia;
+}
+
+/* Nacimiento: fecha pasada u hoy */
+int validarFecha(int dia, int mes, int anio){
+    if(!esFechaCalendarioValida(dia, mes, anio)) return 0;
+    return compararFechas(hacerFecha(dia, mes, anio), fechaActual()) <= 0;
+}
+
+int validarFechaCita(int dia, int mes, int anio){
+    if(!esFechaCalendarioValida(dia, mes, anio)) return 0;
+    return compararFechas(hacerFecha(dia, mes, anio), fechaActual()) >= 0;
 }
 
 int calcularEdadPaciente(fecha fechaNacimiento, fecha fechaHoy){
-    if (!validarFecha(fechaNacimiento.dia, fechaNacimiento.mes, fechaNacimiento.anio))
-    {
-        return -1;
+    if(!esFechaCalendarioValida(fechaNacimiento.dia,
+                                 fechaNacimiento.mes,
+                                 fechaNacimiento.anio)) return -1;
+    if(!esFechaCalendarioValida(fechaHoy.dia,
+                                 fechaHoy.mes,
+                                 fechaHoy.anio)) return -1;
+
+    int edad = fechaHoy.anio - fechaNacimiento.anio;
+    if(fechaHoy.mes < fechaNacimiento.mes ||
+       (fechaHoy.mes == fechaNacimiento.mes && fechaHoy.dia < fechaNacimiento.dia)){
+        edad--;
     }
-
-    if (!validarFecha(fechaHoy.dia,fechaHoy.mes, fechaHoy.anio))
-    {
-        return -1;
-    }
-
-    int edad = fechaHoy.anio-fechaNacimiento.anio;
-    if (fechaHoy.mes < fechaNacimiento.mes ||
-        (fechaHoy.mes == fechaNacimiento.mes && fechaHoy.dia < fechaNacimiento.dia))
-     {
-         edad--;
-     }
-
-     if (edad<0)
-     {
-        return -1;
-     }
-     
-    
-    return edad;
-    
+    return (edad < 0) ? -1 : edad;
 }
-

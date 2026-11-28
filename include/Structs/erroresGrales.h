@@ -1,11 +1,10 @@
-#ifndef ERRORES_GRALES
+#ifndef ERRORES_GRALES_H
+#define ERRORES_GRALES_H
 
 typedef enum{
-    ERROR_NOMBREoAPELLIDO_INVALIDO=2,
+    ERROR_MEMORIA=100,
     ERROR_ID_INVALIDO,
-
+    ERROR_NOMBREoAPELLIDO_INVALIDO
 }erroresGrales;
-
-
 
 #endif

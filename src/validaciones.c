@@ -103,4 +103,10 @@ bool validaID(int *id) {
     *id = atoi(buffer);
     return *id > 0;
 }
+int validaLogin(const char* c){ return validaClave(c); }
 
+int validaEspecialidad(listaEspecialidades* lista, const char* esp){
+    if(lista == NULL || esp == NULL) return 0;
+    if(validaStrings(esp) != 1) return 0;
+    return buscarNombreEspecialidad(lista, esp) == NULL; 
+}

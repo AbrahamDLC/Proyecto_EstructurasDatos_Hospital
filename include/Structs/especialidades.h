@@ -4,20 +4,20 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include "erroresGrales.h"
 
 typedef enum{
     ESPECIALIDAD_INVALIDA,
     ESPECIALIDAD_VALIDA=1,
     ESPECIALIDAD_DUPLICADA,
-    ESPECIALIDAD_NO_ENCONTRADA,
-    ERROR_MEMORIA
+    ESPECIALIDAD_NO_ENCONTRADA
 }errorEspecialidad;
 
 
 
 typedef struct especialidad{
     int id;
-    char especialidadN[20];
+    char especialidadN[50];
 }especialidad;
 
 typedef struct nodoEspecialidad{
