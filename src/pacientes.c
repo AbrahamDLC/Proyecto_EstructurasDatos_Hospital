@@ -115,23 +115,23 @@ paciente* buscarExpediente(listaPacientes* lista, const char* exp){
         if (strcmp(n->dato.numeroExpediente, exp) == 0) { return &n->dato; }
     }
     return NULL;
+}
 
-    int bajaDePaciente(listaPacientes* lista, int IDpaciente){
-        if(lista==NULL || IDpaciente<=0) return ERROR_ID_INVALIDO;
-        paciente* p = buscarID(lista, IDpaciente);
-        if(p==NULL) return ID_NO_ENCONTRADO;
-        if(!p->activo) return ERROR_PACIENTE_INVALIDO; 
-        p->activo = false;
-        return PACIENTE_VALIDO;
-    }
-    
-    int reactivarPaciente(listaPacientes* lista, int IDpaciente){
-        if(lista==NULL || IDpaciente<=0) return ERROR_ID_INVALIDO;
-        paciente* p = buscarID(lista, IDpaciente);
-        if(p==NULL) return ID_NO_ENCONTRADO;
-        if(p->activo) return ERROR_PACIENTE_INVALIDO;
-        p->activo = true;
-        return PACIENTE_VALIDO;
-    }
+int bajaDePaciente(listaPacientes* lista, int IDpaciente){
+    if(lista==NULL || IDpaciente<=0) return ERROR_ID_INVALIDO;
+    paciente* p = buscarID(lista, IDpaciente);
+    if(p==NULL) return ID_NO_ENCONTRADO;
+    if(!p->activo) return ERROR_PACIENTE_INVALIDO; 
+    p->activo = false;
+    return PACIENTE_VALIDO;
+}
+
+int reactivarPaciente(listaPacientes* lista, int IDpaciente){
+    if(lista==NULL || IDpaciente<=0) return ERROR_ID_INVALIDO;
+    paciente* p = buscarID(lista, IDpaciente);
+    if(p==NULL) return ID_NO_ENCONTRADO;
+    if(p->activo) return ERROR_PACIENTE_INVALIDO;
+    p->activo = true;
+    return PACIENTE_VALIDO;
 }
 

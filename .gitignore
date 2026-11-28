@@ -1,0 +1,14 @@
+node_modules/
+clinica-frontend/node_modules/
+clinica-frontend/src-tauri/target/
+.DS_Store
+.idea/
+*.db
+*.dylib
+*.so
+*.dll
+*.o
+clinica-frontend/node_modules/
+clinica-frontend/dist/
+clinica-frontend/build/
+.env
