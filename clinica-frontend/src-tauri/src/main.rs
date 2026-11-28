@@ -5,6 +5,8 @@ use libloading::{Library, Symbol};
 use std::ffi::{CStr, CString};
 use std::sync::Mutex;
 use tauri::State;
+use tauri::Manager;
+use tauri::path::BaseDirectory;
 
 // Tipos de las funciones del dylib
 type FnLogin = unsafe extern "C" fn(*const i8, *const i8) -> i32;
@@ -22,34 +24,36 @@ type FnIntVoid = unsafe extern "C" fn() -> i32;
 
 struct Clinic { lib: Library }
 
-fn new(app: &tauri::AppHandle) -> Self {
-    // Detecta el sistema operativo para elegir la librería correcta
-    let lib_name = if cfg!(target_os = "windows") {
-        "libclinica.dll"
-    } else if cfg!(target_os = "macos") {
-        "libclinica.dylib"
-    } else {
-        "libclinica.so" // Para Linux
-    };
+impl Clinic {
+    fn new(app: &tauri::AppHandle) -> Self {
+        // Detecta el sistema operativo para elegir la librería correcta
+        let lib_name = if cfg!(target_os = "windows") {
+            "libclinica.dll"
+        } else if cfg!(target_os = "macos") {
+            "libclinica.dylib"
+        } else {
+            "libclinica.so" // Para Linux
+        };
 
-    let path = app.path().resolve(lib_name, BaseDirectory::Resource)
-        .expect("No se pudo encontrar la ruta de la librería dinámica");
-        
-    let lib = unsafe { Library::new(&path) }
-        .expect(&format!("No se pudo cargar la librería: {}", lib_name));
-        
-    unsafe {
-        let init: Symbol<FnVoid> = lib.get(b"clinica_init\0").unwrap();
-        init();
-        
-        let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
-        let db_path = format!("{}/clinica.db", home);
-        let ruta = cstr(&db_path);
-        
-        let cargar: Symbol<FnPathInt> = lib.get(b"clinica_cargar_datos\0").unwrap();
-        cargar(ruta.as_ptr());
+        let path = app.path().resolve(lib_name, BaseDirectory::Resource)
+            .expect("No se pudo encontrar la ruta de la librería dinámica");
+            
+        let lib = unsafe { Library::new(&path) }
+            .expect(&format!("No se pudo cargar la librería: {}", lib_name));
+            
+        unsafe {
+            let init: Symbol<FnVoid> = lib.get(b"clinica_init\0").unwrap();
+            init();
+            
+            let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
+            let db_path = format!("{}/clinica.db", home);
+            let ruta = cstr(&db_path);
+            
+            let cargar: Symbol<FnPathInt> = lib.get(b"clinica_cargar_datos\0").unwrap();
+            cargar(ruta.as_ptr());
+        }
+        Self { lib }
     }
-    Self { lib }
 }
 
 
@@ -218,7 +222,11 @@ fn login(state: State<'_, Mutex<Clinic>>, usuario: String, clave: String) -> i32
 
 fn main() {
     tauri::Builder::default()
-        .manage(Mutex::new(Clinic::new()))
+    .setup(|app| {
+        let clinic = Clinic::new(app.handle());
+        app.manage(Mutex::new(clinic));
+        Ok(())
+    })
         .invoke_handler(tauri::generate_handler![
             listar_pacientes, 
             registrar_paciente, 
